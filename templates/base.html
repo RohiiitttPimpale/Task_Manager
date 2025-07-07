@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="static/form_css.css">
+    {% block head %} {% endblock %}
+</head>
+<body>
+
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+        <p class="w-100"></p>
+      {% if current_user.is_authenticated %}
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="{{ url_for('logout') }}"><button type="button" class="btn btn-danger">Logout</button></a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav px-2">
+          <li class="nav-item text-nowrap">
+              <a class="nav-link" href="{{ url_for('login') }}"><button type="button" class="btn btn-warning">Login</button></a>
+          </li>
+      </ul>
+        <ul class="navbar-nav px-2">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{{ url_for('register') }}"><button type="button" class="btn btn-warning">Register</button></a>
+            </li>
+        </ul>
+      {% endif %}
+
+    </nav>
+    {% block content %} {% endblock %}
+
+{{ bootstrap.load_js() }}
+</body>
+</html>

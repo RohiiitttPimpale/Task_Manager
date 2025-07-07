@@ -1,0 +1,23 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% extends 'home.html' %}
+{% block title %} {{ task.title }} {% endblock %}
+{% block heading %}{{task.title}}{% endblock %}
+{% block toolbar %}{% endblock %}
+{% block task %}
+{{ render_form(form) }}
+{% for todo in todos %}
+{% if not todo == "" %}
+<a href="{{ url_for('task',task_name=task.title ) }}"><button style="color:darkblue;
+    width:80%;
+    text-align:left;
+    font-size:20px;
+    margin:10px;" type="button" class="left_width btn btn-info">{{todo}}</button></a>
+<a href="{{ url_for('delete_task', task_name=task.title, task_todo=todo) }}"><button style="color:black;
+    width:10%;
+    text-align:left;
+    font-size:20px;
+    margin:10px;" type="button" class="right_width btn btn-danger">Delete</button></a>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
