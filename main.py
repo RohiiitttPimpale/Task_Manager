@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped,mapped_column,DeclarativeBase
 from sqlalchemy import Integer,Float,String,Text
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
+import os
 
 
 class Base(DeclarativeBase):
@@ -28,8 +29,9 @@ class Task(db.Model):
 login_manager = LoginManager()
 
 app = Flask(__name__)
-app.secret_key = "this is secret key"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+app.secret_key = os.environ.get("FLASK_KEY")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///database.db")
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"   "for local use this"
 db.init_app(app=app)
 login_manager.init_app(app=app)
 
@@ -141,4 +143,4 @@ def delete_task(task_name,task_todo):
     return redirect(url_for("task", task_name=task_name))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
