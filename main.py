@@ -30,8 +30,8 @@ login_manager = LoginManager()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///database.db")
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"   "for local use this"
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///database.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"   #"for local use this"
 db.init_app(app=app)
 login_manager.init_app(app=app)
 
@@ -92,6 +92,7 @@ def register():
             return redirect("/")
 
     return render_template("register.html", form=my_form)
+
 @app.route("/logout")
 @login_required
 def logout():
@@ -116,6 +117,7 @@ def add_task_list():
     return render_template("add_task.html", form=task_form,tasks=tasks)
 
 @app.route("/task/<task_name>", methods=["GET","POST"])
+@login_required
 def task(task_name):
     task_form = NextTaskForm()
     task = db.session.execute(db.select(Task).where(Task.title == task_name)).scalar()
@@ -129,6 +131,7 @@ def task(task_name):
         return render_template("task.html", form=task_form, task=task,todos=todos,tasks=tasks)
 
 @app.route("/delete_list/<task_name>")
+@login_required
 def delete_list(task_name):
     list = db.session.execute(db.select(Task).where(Task.title == task_name)).scalar()
     db.session.delete(list)
@@ -136,6 +139,7 @@ def delete_list(task_name):
     return redirect(url_for("home"))
 
 @app.route("/delete_task/<task_name>/<task_todo>")
+@login_required
 def delete_task(task_name,task_todo):
     list = db.session.execute(db.select(Task).where(Task.title == task_name)).scalar()
     list.task = list.task.replace(task_todo, "")

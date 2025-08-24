@@ -10,7 +10,7 @@
 <body>
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Task Manager</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ url_for('home') }}">Task Manager</a>
         <p class="w-100"></p>
       {% if current_user.is_authenticated %}
       <ul class="navbar-nav px-3">

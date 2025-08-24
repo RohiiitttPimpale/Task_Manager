@@ -2,7 +2,9 @@
 {% extends 'home.html' %}
 {% block title %} {{ task.title }} {% endblock %}
 {% block heading %}{{task.title}}{% endblock %}
-{% block toolbar %}{% endblock %}
+{% block toolbar %}
+<a href="{{ url_for('delete_list', task_name=task.title) }}"><button class="btn btn-danger px-3" type="button">Delete List</button></a>
+{% endblock %}
 {% block task %}
 {{ render_form(form) }}
 {% for todo in todos %}
