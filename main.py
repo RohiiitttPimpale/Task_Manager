@@ -30,8 +30,8 @@ login_manager = LoginManager()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_KEY")
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///database.db")
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"   #"for local use this"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI")
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"   #"for local use this"
 db.init_app(app=app)
 login_manager.init_app(app=app)
 
